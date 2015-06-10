@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html ng-app="premailer">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>
+    <%= pkg.name %>
+  </title>
+
+  <link rel="stylesheet" type="text/css" href="<%= css %>" media="all">
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+</head>
+
+<body>
+  <div class="container" ng-controller="ConversionCtrl">
+    <div class="header clearfix">
+      <nav>
+        <ul class="nav nav-pills pull-right">
+          <li role="presentation" class="active"><a href="#">Home</a></li>
+          <li role="presentation"><a href="#">About</a></li>
+          <li role="presentation"><a href="#">Contact</a></li>
+        </ul>
+      </nav>
+      <h3 class="text-muted">Premailer.io</h3>
+    </div>
+
+    <div class="jumbotron">
+      <h2>Paste in your HTML + CSS here</h2>
+      <h3>and get CSS inlined, ideal of HTML emails</h3>
+      <form ng-submit="start()">
+        <div class="form-group">
+          <textarea class="form-control" rows="12" ng-model="conversion.html"></textarea>
+        </div>
+        <div class="form-group">
+          <label for="base_url">Base URL (optional)</label>
+          <input type="text" ng-model="conversion.base_url" class="form-control" id="base_url" placeholder="e.g. http://example.com">
+        </div>
+        <div class="form-group">
+          <label for="preserve_internal_links">Preserve internal links</label>
+          <input type="checkbox" name="preserve_internal_links" class="form-control" id="preserve_interal_links">
+        </div>
+      </form>
+      <p>
+        <button class="btn btn-lg btn-success" type="button" role="button"
+         ng-click="start()" ng-disabled="converting">
+          <i class="fa fa-cog fa-spin" ng-if="converting"></i>
+          <span ng-if="converting">Converting</span>
+          <span ng-if="!converting">Convert!</span>
+        </button>
+      </p>
+
+      <div class="alert alert-danger" ng-repeat="error in conversionErrors">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true"
+         ng-click="removeConversionError(error)">&times;</button>
+        <strong>Oh snap!</strong><br>
+        {{ error }}
+      </div>
+    </div>
+
+    <div class="row" id="results" ng-if="results" ng-cloak>
+      <button type="button" class="btn btn-warning btn-block"
+       ng-click="toggleShowWarnings()">
+        <span ng-if="showWarnings">Hide</span>
+        <span ng-if="!showWarnings">Show</span>
+        <code>cssutils</code>'s <b>{{ ::countWarnings(results.warnings) }}</b> warnings
+      </button>
+      <div ng-show="showWarnings">
+        <pre>{{ ::results.warnings }}</pre>
+      </div>
+
+      <div hljs source="results.html"></div>
+
+      <p>That took a whopping
+        <b ng-if="results.took <= 1000">{{ results.took | number:2 }} milliseconds</b>
+        <b ng-if="results.took > 1000">{{ results.took / 1000 | number:2 }} seconds</b>
+        to convert.<br>
+        The resulting HTML is <b>{{ results.html.length | filesize }}</b>.
+      </p>
+    </div>
+    <!-- <div class="row marketing">
+      <div class="col-lg-6">
+      <h4>Subheading</h4>
+      <p>Donec id elit non mi porta gravida at eget metus. Maecenas faucibus mollis interdum.</p>
+
+      <h4>Subheading</h4>
+      <p>Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Cras mattis consectetur purus sit amet fermentum.</p>
+
+      <h4>Subheading</h4>
+      <p>Maecenas sed diam eget risus varius blandit sit amet non magna.</p>
+      </div>
+
+      <div class="col-lg-6">
+      <h4>Subheading</h4>
+      <p>Donec id elit non mi porta gravida at eget metus. Maecenas faucibus mollis interdum.</p>
+
+      <h4>Subheading</h4>
+      <p>Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Cras mattis consectetur purus sit amet fermentum.</p>
+
+      <h4>Subheading</h4>
+      <p>Maecenas sed diam eget risus varius blandit sit amet non magna.</p>
+      </div>
+      </div> -->
+
+    <footer class="footer">
+      <p>&copy; Premailer.io by <a href="http://www.peterbe.com">@peterbe</a></p>
+    </footer>
+
+  </div>
+  <!-- /container -->
+  <script type="text/javascript" src="<%= js %>"></script>
+</body>
+
+</html>
