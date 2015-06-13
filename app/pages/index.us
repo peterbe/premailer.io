@@ -27,6 +27,21 @@
     </div>
 
     <div class="jumbotron">
+      <div class="tabbable tabs-below">
+                <div id="myTabContent" class="tab-content">
+                  <div class="tab-pane fade active in" id="home2">
+                    <p>Raw denim you probably haven't heard of them jean shorts Austin. Nesciunt tofu stumptown aliqua, retro synth master cleanse. Mustache cliche tempor, williamsburg carles vegan helvetica. </p>
+                  </div>
+                  <div class="tab-pane fade" id="profile2">
+                    <p>Food truck fixie locavore, accusamus mcsweeney's marfa nulla single-origin coffee squid. Exercitation +1 labore velit, blog sartorial PBR leggings next level wes anderson artisan four loko farm-to-table craft beer twee.  </p>
+                  </div>
+                </div>
+                <ul id="myTab2" class="nav nav-tabs nav-justified">
+                  <li class="active"><a href="#home2" data-toggle="tab">Home</a></li>
+                  <li class=""><a href="#profile2" data-toggle="tab">Profile</a></li>
+                </ul>
+              </div>
+
       <h2>Paste in your HTML + CSS here</h2>
       <h3>and get CSS inlined, ideal of HTML emails</h3>
       <form ng-submit="start()">
