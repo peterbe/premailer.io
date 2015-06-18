@@ -37,7 +37,49 @@ angular.module('premailer', ['hljs'])
   };
 })
 
+// from http://uncorkedstudios.com/blog/multipartformdata-file-upload-with-angularjs
+.directive('fileModel', ['$parse', function ($parse) {
+    return {
+        restrict: 'A',
+        link: function(scope, element, attrs) {
+            var model = $parse(attrs.fileModel);
+            var modelSetter = model.assign;
+
+            element.bind('change', function(){
+                scope.$apply(function(){
+                    modelSetter(scope, element[0].files[0]);
+                });
+            });
+        }
+    };
+}])
+
+// .directive("fileread", [function () {
+//     return {
+//         scope: {
+//             fileread: "="
+//         },
+//         link: function (scope, element, attributes) {
+//             element.bind("change", function (changeEvent) {
+//                 var reader = new FileReader();
+//                 reader.onload = function (loadEvent) {
+//                     scope.$apply(function () {
+//                         scope.fileread = loadEvent.target.result;
+//                     });
+//                 }
+//                 reader.readAsDataURL(changeEvent.target.files[0]);
+//             });
+//         }
+//     }
+// }])
+
 .controller('ConversionCtrl', function($scope, $http, $timeout) {
+  if (/#(upload|url|textarea)/.test(document.location.hash)) {
+    $scope.active = document.location.hash.substring(1, document.location.hash.length);
+  } else {
+    $scope.active = 'textarea';
+  }
+  $scope.activeResult = 'html';
   $scope.results = null;
   $scope.showWarnings = false;
   $scope.conversion = {};
@@ -52,27 +94,58 @@ angular.module('premailer', ['hljs'])
     return (warnings.match(/\n/g) || []).length;
   };
 
-  $scope.start = function() {
+  $scope.start = function(start) {
+    start = start || false;
     $scope.converting = true;
     $scope.results = null;
     $scope.conversionErrors = [];
-    $http.post('/api/transform', $scope.conversion)
-    .success(function(response) {
-      if (response.errors) {
-        $scope.conversionErrors = response.errors;
-      } else {
-        $scope.results = response;
-        $timeout(function() {
-          document.getElementById('results').scrollIntoView();
-        }, 100);
+    if (!start && $scope.active === 'upload') {
+      // Need to read that file into a string.
+      // The reason for using a DOM selector like this is that it works
+      // even between reloads since the browser remembers what was selected
+      // before. With angular that gets forgotten.
+      var fileInput = document.querySelector('input[type="file"]');
+      var file = fileInput.files[0];
+      var reader = new FileReader();
+      reader.onload = function(data) {
+        $scope.conversion.html = data.target.result;
+        $scope.start(true);
+      };
+      reader.readAsText(file);
+    } else {
+      if ($scope.conversion.url && $scope.active !== 'url') {
+        $scope.conversion.url = '';
+      } else if ($scope.conversion.url && !$scope.conversion.base_url) {
+        $scope.conversion.base_url = $scope.conversion.url;
       }
-    })
-    .error(function() {
-      console.error.apply(console, arguments);
-    })
-    .finally(function() {
-      $scope.converting = false;
-    });
+      $http.post('/api/transform', $scope.conversion)
+      .success(function(response) {
+        if (response.errors) {
+          $scope.conversionErrors = response.errors;
+        } else {
+          $scope.results = response;
+          $timeout(function() {
+            document.getElementById('results').scrollIntoView();
+          }, 100);
+        }
+      })
+      .error(function() {
+        console.error.apply(console, arguments);
+      })
+      .finally(function() {
+        $scope.converting = false;
+      });
+    }
+  };
+
+  $scope.setActiveResult = function(value) {
+    $scope.activeResult = value;
+    if (value === 'preview') {
+      var d = document.querySelector('iframe').contentWindow.document;
+      d.open();
+      d.write($scope.results.html);
+      d.close();
+    }
   };
 
   $scope.removeConversionError = function(error) {

@@ -1,9 +1,9 @@
 {
-  "name": "premailer.io",
-  "description": "An HTML/JS/CSS app",
+  "name": "Premailer.io",
+  "description": "Inlining your HTML + CSS for HTML emails",
   "version": "0.0.1",
-  "private": true,
-  "author": "John Doe",
+  "private": false,
+  "author": "Peter Bengtsson",
   "devDependencies": {
     "lineman": "~0.36.3"
   },

@@ -6,6 +6,7 @@ import logging
 from cStringIO import StringIO
 from wsgiref import simple_server
 
+import requests
 import falcon
 import premailer
 
@@ -52,17 +53,22 @@ class TransformResource:
         body = json.loads(body.decode('utf-8'))
         # print "BODY"
         # print body
-        html = body.pop('html')
+
+        if body.get('url'):
+            html = self._download_url(body.pop('url'))
+            if 'html' in body:
+                body.pop('html')
+        else:
+            html = body.pop('html')
         options = body
         pretty_print = options.pop('pretty_print', True)
-        # print "OPTIONS"
-        # print options
 
         mylog = StringIO()
         logging_handler = logging.StreamHandler(mylog)
         logging_handler.setFormatter(logging.Formatter('%(levelname)s %(message)s'))
         options['cssutils_logging_handler'] = logging_handler
         options['cssutils_logging_level'] = logging.WARNING
+
         p = premailer.Premailer(html, **options)
         error = None
         warnings = None
@@ -95,6 +101,9 @@ class TransformResource:
               'took': took,
               'warnings': warnings,
             }, indent=2)
+
+    def _download_url(self, url):
+        return requests.get(url).text
 
 
 
