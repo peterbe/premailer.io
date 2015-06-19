@@ -1,1 +1,19 @@
-/* test */
+body {
+  font-family: Lato, "Helvetica Neue",Helvetica,Arial,sans-serif;
+}
+
+.jumbotron {
+  background: transparent url('../img/mailman.png') no-repeat;
+  background-position: right;
+}
+
+.nav-tabs li.active a {
+  font-weight: bold;
+  /*background-color: #EEE;*/
+}
+.nav-tabs li.active a:focus {
+  background-color: #EEE;
+}
+.nav-tabs li a {
+  color: #555;
+}

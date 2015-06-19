@@ -9,6 +9,7 @@
     <%= pkg.name %>
   </title>
 
+  <link href='//fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
   <link rel="stylesheet" type="text/css" href="<%= css %>" media="all">
   <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
   <style>
