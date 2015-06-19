@@ -13,7 +13,8 @@
   <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
   <style>
     body {
-      padding-top: 70px;
+      /*padding-top: 70px;*/
+      padding-top: 30px;
       padding-bottom: 30px;
     }
 
