@@ -86,7 +86,7 @@
       </p>
     </div>
 
-    <form ng-submit="start()">
+    <form ng-submit="start()" ng-cloak>
       <div class="panel">
         <ul class="nav nav-tabs nav-justified">
           <li ng-class="{active: active=='textarea'}">
@@ -125,16 +125,16 @@
         <label for="preserve_internal_links">Preserve internal links</label>
         <input type="checkbox" name="preserve_internal_links" class="form-control" id="preserve_interal_links">
       </div>
+      <p>
+        <button class="btn btn-lg btn-success" type="button" role="button" ng-click="start()" ng-disabled="converting">
+          <i class="fa fa-cog fa-spin" ng-if="converting"></i>
+          <span ng-if="converting">Converting</span>
+          <span ng-if="!converting">Convert!</span>
+        </button>
+      </p>
     </form>
-    <p>
-      <button class="btn btn-lg btn-success" type="button" role="button" ng-click="start()" ng-disabled="converting">
-        <i class="fa fa-cog fa-spin" ng-if="converting"></i>
-        <span ng-if="converting">Converting</span>
-        <span ng-if="!converting">Convert!</span>
-      </button>
-    </p>
 
-    <div class="alert alert-danger" ng-repeat="error in conversionErrors">
+    <div class="alert alert-danger" ng-repeat="error in conversionErrors" ng-cloak>
       <button type="button" class="close" data-dismiss="alert" aria-hidden="true" ng-click="removeConversionError(error)">&times;</button>
       <strong>Oh snap!</strong>
       <br> {{ error }}
