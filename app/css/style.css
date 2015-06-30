@@ -22,3 +22,11 @@ body {
 .nav-tabs li a {
   color: #555;
 }
+
+input[type="file"] {
+  font-size: 16px;
+  margin: 20px;
+}
+input[name="url"] {
+  margin-top: 5px;
+}
