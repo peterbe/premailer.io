@@ -1,4 +1,4 @@
-angular.module('premailer', ['hljs'])
+angular.module('premailer', ['hljs', 'door3.css'])
 
 // .config(function (hljsServiceProvider) {
 //   hljsServiceProvider.setOptions({
@@ -73,7 +73,8 @@ angular.module('premailer', ['hljs'])
 //     }
 // }])
 
-.controller('ConversionCtrl', function($scope, $http, $timeout) {
+.controller('ConversionCtrl', function($scope, $http, $timeout, $css) {
+  $css.add('//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css');
   if (/#(upload|url|textarea)/.test(document.location.hash)) {
     $scope.active = document.location.hash.substring(1, document.location.hash.length);
   } else {
