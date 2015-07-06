@@ -100,6 +100,7 @@ angular.module('premailer', ['hljs', 'door3.css'])
     $scope.converting = true;
     $scope.results = null;
     $scope.conversionErrors = [];
+    $scope.serverError = null;
     if (!start && $scope.active === 'upload') {
       // Need to read that file into a string.
       // The reason for using a DOM selector like this is that it works
@@ -131,6 +132,7 @@ angular.module('premailer', ['hljs', 'door3.css'])
         }
       })
       .error(function() {
+        $scope.serverError = arguments[0];
         console.error.apply(console, arguments);
       })
       .finally(function() {

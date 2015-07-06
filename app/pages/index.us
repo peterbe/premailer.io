@@ -193,7 +193,20 @@
 
     </div><!-- /results -->
 
-    <div id="about" class="panel" ng-if="!results" style="margin-top: 80px;">
+    <div id="server-error" class="xpanel alert alert-danger" ng-if="serverError">
+        <h2>Server Error</h2>
+        <p>
+          Something horrible happened. I think.
+        </p>
+        <p>
+          Basically, we weren't even able to make a server query.
+        </p>
+        <pre>{{ serverError }}</pre>
+
+    </div><!-- Error -->
+
+
+    <div id="about" class="panel" ng-if="!results && !serverError" style="margin-top: 80px;">
       <div class="page-header">
         <h2>About this site</h2>
         <p>
