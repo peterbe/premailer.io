@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>
-    <%= pkg.name %>
+    <%= pkg.name %> - <%= pkg.description %>
   </title>
   <link rel="icon" type="image/png" href="/img/mailman32.png">
   <link href='//fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
@@ -192,6 +192,23 @@
       </p>
 
     </div><!-- /results -->
+
+    <div id="about" class="panel" ng-if="!results" style="margin-top: 80px;">
+      <div class="page-header">
+        <h2>About this site</h2>
+        <p>
+          <a href="https://github.com/peterbe/premailer">Premailer</a> is <b>a
+          Python library</b> based on <code>libxml</code> which can <b>analyze a
+          HTML document</b> and <b>extract its CSS style sheets</b> and then for all
+          CSS seletors defined, it finds the DOM nodes and puts <b><code>style</code>
+          attributes</b> in instead.
+        </p>
+        <p>
+          This website is an example implementation of that library that you
+          can test in a browser without having to install anything.
+        </p>
+      </div>
+    </div><!-- About -->
 
   <!-- </div> -->
 

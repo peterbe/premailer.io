@@ -1,6 +1,6 @@
 {
   "name": "Premailer.io",
-  "description": "Inlining your HTML + CSS for HTML emails",
+  "description": "CSS blocks into inline style attributes for HTML emails",
   "version": "0.0.1",
   "private": false,
   "author": "Peter Bengtsson",
