@@ -240,7 +240,7 @@
           <span ng-if="converting">Converting</span>
           <span ng-if="!converting">Convert!</span>
         </button>
-        <button class="btn btn-primary" type="button" role="button" ng-click="advancedMode=!advancedMode">
+        <button class="btn btn-primary" type="button" role="button" ng-click="advancedMode=!advancedMode" ng-disabled="converting">
           <span ng-if="!advancedMode">Advanced options</span>
           <span ng-if="advancedMode">Hide advanced options</span>
         </button>

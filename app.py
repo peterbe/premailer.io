@@ -40,8 +40,6 @@ class TransformResource:
             raise falcon.HTTPBadRequest('Empty request body',
                                         'A valid JSON document is required.')
         body = json.loads(body.decode('utf-8'))
-        # print "BODY"
-        # print body
 
         if body.get('url'):
             html = self._download_url(body.pop('url'))
@@ -49,6 +47,8 @@ class TransformResource:
                 body.pop('html')
         else:
             html = body.pop('html')
+            if 'url' in body:
+                body.pop('url')
         options = body
         pretty_print = options.pop('pretty_print', True)
 
@@ -58,7 +58,13 @@ class TransformResource:
         options['cssutils_logging_handler'] = logging_handler
         options['cssutils_logging_level'] = logging.WARNING
 
-        p = premailer.Premailer(html, **options)
+        try:
+            p = premailer.Premailer(html, **options)
+        except TypeError as exp:
+            raise falcon.HTTPBadRequest(
+                'Invalid options to premailer',
+                str(exp)
+            )
         error = None
         warnings = None
         t0 = time.time()
@@ -92,9 +98,6 @@ class TransformResource:
 
 # falcon.API instances are callable WSGI apps
 app = falcon.API()
-
-# Resources are represented by long-lived class instances
-#things = ThingsResource()
 
 app.add_route('/api/transform', TransformResource())
 
