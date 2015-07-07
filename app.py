@@ -43,7 +43,6 @@ class TransformResource:
         # See also: PEP 3333
         if req.content_length in (None, 0):
             # Nothing to do
-            raise NotImplementedError
             return
 
         body = req.stream.read()

@@ -121,15 +121,128 @@
         <label for="base_url">Base URL (optional)</label>
         <input type="text" ng-model="conversion.base_url" class="form-control" id="base_url" placeholder="e.g. http://example.com">
       </div>
-      <div class="form-group">
+      <div class="form-group" ng-show="advancedMode">
         <label for="preserve_internal_links">Preserve internal links</label>
-        <input type="checkbox" name="preserve_internal_links" class="form-control" id="preserve_interal_links">
+        <input type="checkbox" ng-model="conversion.preserve_internal_links" id="preserve_internal_links">
+        <p class="help-block">
+          Anchor links (e.g. <code>&lt;a href=&quot;#anchor&quot;&gt;</code>)
+          stay unchanged.
+        </p>
+      </div>
+      <div class="form-group" ng-show="advancedMode">
+        <label for="preserve_inline_attachments">Preserve inline attachments</label>
+        <input type="checkbox" ng-model="conversion.preserve_inline_attachments" id="preserve_inline_attachments">
+        <p class="help-block">
+          Leave <code>img</code> tags with <code>src</code> value starting
+          with <code>cid:</code> as is.
+        </p>
+      </div>
+      <div class="form-group" ng-show="advancedMode">
+        <label for="exclude_pseudoclasses">Exclude pseudo classes</label>
+        <input type="checkbox" ng-model="conversion.exclude_pseudoclasses" id="exclude_pseudoclasses">
+        <p class="help-block">
+          Drop selectors like <code>:hover</code> in style attributes.
+        </p>
+      </div>
+      <div class="form-group" ng-show="advancedMode">
+        <label for="keep_style_tags">Keep <code>style</code> tags</label>
+        <input type="checkbox" ng-model="conversion.keep_style_tags" id="keep_style_tags">
+        <p class="help-block">
+          After having turned every <code>style</code> tag's content into
+          inline elements, should it leave the <code>style</code> tag in the HTML document.
+        </p>
+      </div>
+      <div class="form-group" ng-show="advancedMode">
+        <label for="include_star_selectors">Include star selectors</label>
+        <input type="checkbox" ng-model="conversion.include_star_selectors" id="include_star_selectors">
+        <p class="help-block">
+          Whether any selector containing a <code>*</code> should be included.
+        </p>
+      </div>
+      <div class="form-group" ng-show="advancedMode">
+        <label for="remove_classes">Remove classes</label>
+        <input type="checkbox" ng-model="conversion.remove_classes" id="remove_classes">
+        <p class="help-block">
+          Since <code>class</code> attributes on nodes should no longer be
+          necessary, we can remove them afterwards.
+        </p>
+      </div>
+      <div class="form-group" ng-show="advancedMode">
+        <label for="strip_important">Strip <code>!important</code></label>
+        <input type="checkbox" ng-model="conversion.strip_important" id="strip_important">
+        <p class="help-block">
+          Remove all <code>!important</code> markers on CSS selector values.
+        </p>
+      </div>
+      <div class="form-group" ng-show="advancedMode">
+        <label for="external_styles">External styles</label>
+        <textarea class="form-control" rows="2" ng-model="conversion.external_styles" id="external_styles"></textarea>
+        <p class="help-block">
+          Additional CSS style sheet URLs to load in. One per line.
+        </p>
+      </div>
+      <div class="form-group" ng-show="advancedMode">
+        <label for="base_path">Base path</label>
+        <input class="form-control" ng-model="conversion.base_path" id="base_path">
+        <p class="help-block">
+          If using <b>External styles</b> above, this sets an extra prefix to each
+          external style line if it's not an absolute URL.
+        </p>
+      </div>
+      <div class="form-group" ng-show="advancedMode">
+        <label for="css_text">CSS text</label>
+        <textarea class="form-control" rows="2" ng-model="conversion.css_text" id="css_text"></textarea>
+        <p class="help-block">
+          Similar to <b>External styles</b> above but your own free-text chunk of extra CSS.
+        </p>
+      </div>
+      <div class="form-group" ng-show="advancedMode">
+        <label for="method">Method</label><br>
+        <input type="radio" ng-model="conversion.method" value="html"> HTML &nbsp;
+        <input type="radio" ng-model="conversion.method" value="xml"> XML
+        <p class="help-block">
+          Determines which parser <code>lxml</code> will use to parse and stringify the document.
+        </p>
+      </div>
+      <div class="form-group" ng-show="advancedMode">
+        <label for="disable_basic_attributes" title="It should be called 'Basic attributes to disable'">Disable basic attributes</label>
+        <textarea class="form-control" rows="2" ng-model="conversion.disable_basic_attributes" id="disable_basic_attributes"></textarea>
+        <p class="help-block">
+          Enter selector keys you do <b>not</b> want to become basic inline attributes.
+          For example <code>bgcolor</code>. One per line.
+        </p>
+      </div>
+      <div class="form-group" ng-show="advancedMode">
+        <label for="disable_validation">Disable validation</label>
+        <input type="checkbox" ng-model="conversion.disable_validation" id="disable_validation">
+        <p class="help-block">
+          Sent to <a href="https://pypi.python.org/pypi/cssutils/"><code>cssutils</code></a> when it parses the found CSS strings.
+        </p>
+      </div>
+      <div class="form-group" ng-show="advancedMode">
+        <label for="cache_css_parsing">Cache CSS parsing</label>
+        <input type="checkbox" ng-model="conversion.cache_css_parsing" id="cache_css_parsing">
+        <p class="help-block">
+          Relevant if you send the same block of CSS repeatedly into <code>cssutils</code> to be parsed.
+        </p>
+      </div>
+      <div class="form-group" ng-show="advancedMode">
+        <label for="disable_leftover_css">Disable leftover CSS</label>
+        <input type="checkbox" ng-model="conversion.disable_leftover_css" id="disable_leftover_css">
+        <p class="help-block">
+          If you have no <code>&lt;head&gt;</code> and don't want it to try to insert the
+          remaining style into the head.
+        </p>
       </div>
       <p>
         <button class="btn btn-lg btn-success" type="button" role="button" ng-click="start()" ng-disabled="converting">
           <i class="fa fa-cog fa-spin" ng-if="converting"></i>
           <span ng-if="converting">Converting</span>
           <span ng-if="!converting">Convert!</span>
+        </button>
+        <button class="btn btn-primary" type="button" role="button" ng-click="advancedMode=!advancedMode">
+          <span ng-if="!advancedMode">Advanced options</span>
+          <span ng-if="advancedMode">Hide advanced options</span>
         </button>
       </p>
     </form>
@@ -193,18 +306,16 @@
 
     </div><!-- /results -->
 
-    <div id="server-error" class="xpanel alert alert-danger" ng-if="serverError">
-        <h2>Server Error</h2>
-        <p>
-          Something horrible happened. I think.
-        </p>
-        <p>
-          Basically, we weren't even able to make a server query.
-        </p>
-        <pre>{{ serverError }}</pre>
-
-    </div><!-- Error -->
-
+    <div id="server-error" class="alert alert-danger" ng-if="serverError">
+      <h2>Server Error</h2>
+      <p>
+        Something horrible happened. I think.
+      </p>
+      <p>
+        Basically, we weren't even able to make a server query.
+      </p>
+      <pre>{{ serverError }}</pre>
+    </div><!-- server-error -->
 
     <div id="about" class="panel" ng-if="!results && !serverError" style="margin-top: 80px;">
       <div class="page-header">

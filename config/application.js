@@ -54,7 +54,7 @@ module.exports = function(lineman) {
     // make a change in each browser you're working against. To enable LiveReload,
     // comment out the following line:
     //
-    // livereload: true
+    livereload: true
 
   };
 };

@@ -80,12 +80,21 @@ angular.module('premailer', ['hljs', 'door3.css'])
   } else {
     $scope.active = 'textarea';
   }
+  $scope.advancedMode = false;
   $scope.activeResult = 'html';
   $scope.results = null;
   $scope.showWarnings = false;
-  $scope.conversion = {};
-  $scope.conversion.html = '<html>\n<style>\np { color:red }</style>\n' +
-    '<body><p>Text</p>\n</body></html>';
+  $scope.conversion = {
+    // the things that are supposed to be true by default
+    preserve_inline_attachments: true,
+    exclude_pseudoclasses: true,
+    remove_classes: true,
+    strip_important: true,
+    method: 'html',
+    cache_css_parsing: true,
+  };
+  $scope.conversion.html = '<html>\n<style>\np { color:red }\n</style>\n' +
+    '<body>\n<p>Text</p>\n</body></html>';
 
   $scope.toggleShowWarnings = function() {
     $scope.showWarnings = !$scope.showWarnings;
@@ -94,6 +103,32 @@ angular.module('premailer', ['hljs', 'door3.css'])
   $scope.countWarnings = function(warnings) {
     return (warnings.match(/\n/g) || []).length;
   };
+
+  // http://heyjavascript.com/4-creative-ways-to-clone-objects/
+  function cloneObject(obj) {
+    if (obj === null || typeof obj !== 'object') {
+      return obj;
+    }
+    var temp = obj.constructor(); // give temp the original obj's constructor
+    for (var key in obj) {
+      temp[key] = cloneObject(obj[key]);
+    }
+    return temp;
+  }
+
+  function tidyConversionData(data) {
+    data = cloneObject(data);
+    var splits = [
+      'external_styles',
+      'disable_basic_attributes',
+    ];
+    splits.forEach(function(key) {
+      if (data[key]) {
+        data[key] = data[key].split(/\s*\n+\s*/);
+      }
+    });
+    return data;
+  }
 
   $scope.start = function(start) {
     start = start || false;
@@ -120,7 +155,7 @@ angular.module('premailer', ['hljs', 'door3.css'])
       } else if ($scope.conversion.url && !$scope.conversion.base_url) {
         $scope.conversion.base_url = $scope.conversion.url;
       }
-      $http.post('/api/transform', $scope.conversion)
+      $http.post('/api/transform', tidyConversionData($scope.conversion))
       .success(function(response) {
         if (response.errors) {
           $scope.conversionErrors = response.errors;
