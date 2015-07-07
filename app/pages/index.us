@@ -319,7 +319,7 @@
 
     <div id="about" class="panel" ng-if="!results && !serverError" style="margin-top: 80px;">
       <div class="page-header">
-        <h2>About this site</h2>
+        <h2>About this web app</h2>
         <p>
           <a href="https://github.com/peterbe/premailer">Premailer</a> is <b>a
           Python library</b> based on <code>libxml</code> which can <b>analyze a
