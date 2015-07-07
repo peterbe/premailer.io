@@ -306,7 +306,7 @@
 
     </div><!-- /results -->
 
-    <div id="server-error" class="alert alert-danger" ng-if="serverError">
+    <div id="server-error" class="alert alert-danger" ng-if="serverError" ng-cloak>
       <h2>Server Error</h2>
       <p>
         Something horrible happened. I think.
