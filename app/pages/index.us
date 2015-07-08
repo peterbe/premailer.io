@@ -337,7 +337,11 @@
   <!-- </div> -->
 
   <footer class="footer">
-    <p>&copy; Premailer.io by <a href="http://www.peterbe.com">@peterbe</a></p>
+    <p>&copy; Premailer.io by <a href="http://www.peterbe.com">@peterbe</a>
+    &bull;
+    <a href="https://github.com/peterbe/premailer.io"
+       title="Issues, Pull Requests delightfully welcome">Code on GitHub</a>
+    </p>
   </footer>
 
   </div>
