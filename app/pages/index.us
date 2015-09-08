@@ -14,7 +14,6 @@
   <!-- <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"> -->
   <style>
     body {
-      /*padding-top: 70px;*/
       padding-top: 30px;
       padding-bottom: 30px;
     }
@@ -240,6 +239,15 @@
         <p class="help-block">
           If you have no <code>&lt;head&gt;</code> and don't want it to try to insert the
           remaining style into the head.
+        </p>
+      </div>
+      <div class="form-group" ng-show="advancedMode">
+        <label for="align_floating_images">Align floating images</label>
+        <input type="checkbox" ng-model="conversion.align_floating_images" id="align_floating_images">
+        <p class="help-block">
+          Images with <code>float:left</code> or <code>float:right</code> gets
+          an extra <code>align=&quot;left&quot;</code> and
+          <code>align=&quot;right&quot;</code> attribute.
         </p>
       </div>
       <p>

@@ -92,9 +92,10 @@ angular.module('premailer', ['hljs', 'door3.css'])
     strip_important: true,
     method: 'html',
     cache_css_parsing: true,
+    align_floating_images: true,
   };
   $scope.conversion.html = '<html>\n<style>\np { color:red }\n</style>\n' +
-    '<body>\n<p>Text</p>\n</body></html>';
+    '<body>\n  <p>Text</p>\n</body>\n</html>';
 
   $scope.toggleShowWarnings = function() {
     $scope.showWarnings = !$scope.showWarnings;
