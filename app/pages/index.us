@@ -250,6 +250,14 @@
           <code>align=&quot;right&quot;</code> attribute.
         </p>
       </div>
+      <div class="form-group" ng-show="advancedMode">
+        <label for="remove_unset_properties">Remove unset properties</label>
+        <input type="checkbox" ng-model="conversion.remove_unset_properties" id="remove_unset_properties">
+        <p class="help-block">
+          For CSS property/value pairs with a value of <code>unset</code> the
+          property is removed.
+        </p>
+      </div>
       <p>
         <button class="btn btn-lg btn-success" type="button" role="button" ng-click="start()" ng-disabled="converting">
           <i class="fa fa-cog fa-spin" ng-if="converting"></i>

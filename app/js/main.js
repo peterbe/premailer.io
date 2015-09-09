@@ -93,6 +93,7 @@ angular.module('premailer', ['hljs', 'door3.css'])
     method: 'html',
     cache_css_parsing: true,
     align_floating_images: true,
+    remove_unset_properties: true,
   };
   $scope.conversion.html = '<html>\n<style>\np { color:red }\n</style>\n' +
     '<body>\n  <p>Text</p>\n</body>\n</html>';
