@@ -93,7 +93,7 @@ class TransformResource:
 
         # cleaning up
         del p
-        mylog.close()
+        #mylog.close()
 
     def _download_url(self, url):
         return requests.get(url).text
