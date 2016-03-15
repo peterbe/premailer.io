@@ -91,9 +91,12 @@ class TransformResource:
               'warnings': warnings,
             }, indent=2)
 
+        # cleaning up
+        del p
+        mylog.close()
+
     def _download_url(self, url):
         return requests.get(url).text
-
 
 
 # falcon.API instances are callable WSGI apps
