@@ -1,3 +1,4 @@
+import datetime
 import os
 import sys
 import time
@@ -10,6 +11,58 @@ from wsgiref import simple_server
 import requests
 import falcon
 import premailer
+import peewee
+
+
+# Models
+
+db = peewee.PostgresqlDatabase(
+    os.environ.get('PREMAILER_DATABASE_NAME', 'premailer'),
+    user=os.environ.get('PREMAILER_DATABASE_USER', 'peterbe'),
+    password=os.environ.get('PREMAILER_DATABASE_PASSWORD', 'secret'),
+    host=os.environ.get('PREMAILER_DATABASE_HOST', 'localhost'),
+    port=int(os.environ.get('PREMAILER_DATABASE_PORT', '5432')),
+)
+
+
+class Post(peewee.Model):
+    html = peewee.TextField()
+    options = peewee.TextField()
+    duration = peewee.FloatField(null=True)
+    url = peewee.TextField(null=True)
+    result = peewee.TextField(null=True)
+    error = peewee.TextField(null=True)
+    user_agent = peewee.TextField(null=True)
+    created = peewee.DateTimeField(default=datetime.datetime.utcnow)
+
+    class Meta:
+        database = db
+
+db.connect()
+db.create_tables([Post], True)
+
+
+def insert_post(html, options, url=None, user_agent=None):
+    row = Post(
+        html=html,
+        options=json.dumps(options),
+        url=url,
+        user_agent=user_agent
+    )
+    row.save()
+    return row
+
+
+def update_post(row, duration, error=None, result=None):
+    assert error or result
+    row.duration = duration
+    if error:
+        row.error = error
+    else:
+        row.result = result
+    row.save()
+
+# /Models
 
 
 CORS_ORIGIN = os.environ.get('CORS_ORIGIN', 'premailer.io')
@@ -41,15 +94,20 @@ class TransformResource:
                                         'A valid JSON document is required.')
         body = json.loads(body.decode('utf-8'))
 
+        url = None
         if body.get('url'):
-            html = self._download_url(body.pop('url'))
+            url = body.pop('url')
+            html = self._download_url(url)
             if 'html' in body:
                 body.pop('html')
+
         else:
             html = body.pop('html')
             if 'url' in body:
                 body.pop('url')
         options = body
+
+        row = insert_post(html, options, url=url, user_agent=req.user_agent)
         pretty_print = options.pop('pretty_print', True)
 
         mylog = StringIO()
@@ -73,8 +131,15 @@ class TransformResource:
         except Exception:
             exc_type, exc_value, __ = sys.exc_info()
             error = '{} ({})'.format(exc_type.__name__, exc_value)
+
         warnings = mylog.getvalue()
         t1 = time.time()
+
+        if error is None:
+            update_post(row, t1 - t0, result=result)
+        else:
+            update_post(row, t1 - t0, error=error)
+
         resp.status = falcon.HTTP_200
         resp.set_header('Access-Control-Allow-Origin', CORS_ORIGIN)
         resp.set_header('Content-Type', 'application/json')
