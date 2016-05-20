@@ -1,5 +1,5 @@
 premailer==2.11.0
-falcon==0.3.0
-requests==2.9.1
+falcon==1.0.0
+requests==2.10.0
 peewee==2.8.1
 psycopg2==2.6.1
