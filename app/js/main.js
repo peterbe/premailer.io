@@ -88,7 +88,6 @@ angular.module('premailer', ['hljs', 'door3.css'])
     // the things that are supposed to be true by default
     preserve_inline_attachments: true,
     exclude_pseudoclasses: true,
-    remove_classes: true,
     strip_important: true,
     method: 'html',
     cache_css_parsing: true,

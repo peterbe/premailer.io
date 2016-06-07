@@ -1,4 +1,4 @@
-premailer==2.11.0
+premailer==3.0.0
 falcon==0.3.0
 requests==2.10.0
 peewee==2.8.1
