@@ -1,7 +1,7 @@
 premailer==3.0.0
 falcon==0.3.0
 requests==2.10.0
-peewee==2.8.1
+peewee==2.8.2
 psycopg2==2.6.1
 ndg-httpsclient==0.4.1
 pyOpenSSL==16.0.0
