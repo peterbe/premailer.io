@@ -1,6 +1,6 @@
 premailer==3.0.0
 falcon==0.3.0
-requests==2.10.0
+requests==2.11.1
 peewee==2.8.1
 psycopg2==2.6.1
 ndg-httpsclient==0.4.1
