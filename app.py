@@ -5,7 +5,7 @@ import time
 import json
 import contextlib
 import logging
-from cStringIO import StringIO
+from io import StringIO
 from wsgiref import simple_server
 
 import requests
