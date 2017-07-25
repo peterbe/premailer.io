@@ -103,3 +103,6 @@ cryptography==2.0 \
     --hash=sha256:4f8112335483f72ad1243de3bd080fcc54bd0aa663028be3cbccfd997b28f79f \
     --hash=sha256:2e9a60a5c31f8fc5b0c5c820f2e4beb387414c28ab9edbf9307afcc65edd5a8b \
     --hash=sha256:d32453b54f99cfe3103f0cb79f6c0ea68c66483811dfe1527a4f06eb3bc580b0
+asn1crypto==0.22.0 \
+    --hash=sha256:d232509fefcfcdb9a331f37e9c9dc20441019ad927c7d2176cf18ed5da0ba097 \
+    --hash=sha256:cbbadd640d3165ab24b06ef25d1dca09a3441611ac15f6a6b452474fdf0aed1a
