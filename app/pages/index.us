@@ -259,6 +259,14 @@
         </p>
       </div>
       <div class="form-group" ng-show="advancedMode">
+        <label for="allow_network">Allow network</label>
+        <input type="checkbox" ng-model="conversion.allow_network" id="allow_network">
+        <p class="help-block">
+          Whether or not it should be allowed to download external stylesheets
+          from the network.
+        </p>
+      </div>
+      <div class="form-group" ng-show="advancedMode">
         <label for="capitalize_float_margin">Capitalize <code>float</code> and <code>margin</code></label>
         <input type="checkbox" ng-model="conversion.capitalize_float_margin" id="capitalize_float_margin">
         <p class="help-block">
