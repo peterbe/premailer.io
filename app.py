@@ -39,7 +39,7 @@ class Post(peewee.Model):
         database = db
 
 db.connect()
-db.create_tables([Post], True)
+db.create_tables([Post])
 
 
 def insert_post(html, options, url=None, user_agent=None):
