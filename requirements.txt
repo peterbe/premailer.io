@@ -73,7 +73,7 @@ certifi==2018.11.29 \
 idna==2.8 \
     --hash=sha256:c357b3f628cf53ae2c4c05627ecc484553142ca23264e593d327bcde5e9c3407 \
     --hash=sha256:ea8b7f6188e6fa117537c3df7da9fc686d485087abf6ac197f9c46432f7e4a3c
-cryptography==2.5 \
+cryptography==2.6 \
     --hash=sha256:05b3ded5e88747d28ee3ef493f2b92cbb947c1e45cf98cfef22e6d38bb67d4af \
     --hash=sha256:06826e7f72d1770e186e9c90e76b4f84d90cdb917b47ff88d8dc59a7b10e2b1e \
     --hash=sha256:08b753df3672b7066e74376f42ce8fc4683e4fd1358d34c80f502e939ee944d2 \
