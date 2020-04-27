@@ -22,6 +22,9 @@ db = peewee.PostgresqlDatabase(
     password=os.environ.get('PREMAILER_DATABASE_PASSWORD', 'secret'),
     host=os.environ.get('PREMAILER_DATABASE_HOST', 'localhost'),
     port=int(os.environ.get('PREMAILER_DATABASE_PORT', '5432')),
+
+    # http://docs.peewee-orm.com/en/latest/peewee/database.html#using-autoconnect
+    autoconnect=False
 )
 
 
@@ -43,6 +46,7 @@ db.create_tables([Post])
 
 
 def insert_post(html, options, url=None, user_agent=None):
+    db.connect(reuse_if_open=True)
     row = Post(
         html=html,
         options=json.dumps(options),
