@@ -1,1 +1,3 @@
 gunicorn
+black
+flake8

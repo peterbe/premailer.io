@@ -1,0 +1,11 @@
+[flake8]
+max-line-length = 88
+
+# black puts in a space in places like `phrases[i + 1:]`
+# to become `phrases[i + 1 :]` which is incompatible with flake8 at
+# the moment
+ignore = E203,W503
+
+exclude=
+    .git
+    __pycache__,
