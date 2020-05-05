@@ -160,10 +160,8 @@ class HealthcheckResource:
     def on_get(self, req, resp):
         db.connect(reuse_if_open=True)
         query = Post.select()
-        resp.body = (
-            f"OK (count: {query.count()}, "
-            f"premailer version: {premailer.__version__})"
-            "\n"
+        resp.body = json.dumps(
+            {"count": query.count(), "premailer version": premailer.__version__}
         )
 
 
