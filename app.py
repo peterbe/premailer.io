@@ -64,6 +64,17 @@ def update_post(row, duration, error=None, result=None):
 
 # /Models
 
+default_sample_html = """
+<html>
+<style>
+p { color:red }
+</style>
+<body>
+  <p>Text</p>
+</body>
+</html>
+"""
+
 
 CORS_ORIGIN = os.environ.get("CORS_ORIGIN", "premailer.io")
 
@@ -107,7 +118,11 @@ class TransformResource:
                 body.pop("url")
         options = body
 
-        row = insert_post(html, options, url=url, user_agent=req.user_agent)
+        if html.strip() != default_sample_html.strip():
+            row = insert_post(html, options, url=url, user_agent=req.user_agent)
+        else:
+            print("Sample HTML used")
+
         pretty_print = options.pop("pretty_print", True)
 
         mylog = StringIO()
@@ -132,10 +147,11 @@ class TransformResource:
         warnings = mylog.getvalue()
         t1 = time.time()
 
-        if error is None:
-            update_post(row, t1 - t0, result=result)
-        else:
-            update_post(row, t1 - t0, error=error)
+        if html.strip() != default_sample_html.strip():
+            if error is None:
+                update_post(row, t1 - t0, result=result)
+            else:
+                update_post(row, t1 - t0, error=error)
 
         resp.status = falcon.HTTP_200
         resp.set_header("Access-Control-Allow-Origin", CORS_ORIGIN)
