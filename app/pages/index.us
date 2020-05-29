@@ -371,6 +371,10 @@
           This website is an example implementation of that library that you
           can test in a browser without having to install anything.
         </p>
+        <p style="font-weight:bold">
+          Read the original blog post about this site:
+          <a href="https://www.peterbe.com/plog/premailer.io">https://www.peterbe.com/plog/premailer.io</a>
+        </p>
       </div>
     </div><!-- About -->
 
