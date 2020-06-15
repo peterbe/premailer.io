@@ -174,7 +174,9 @@ class TransformResource:
 
 class HealthcheckResource:
     def on_get(self, req, resp):
-        db.connect(reuse_if_open=True)
+        db.close()
+        # db.connect(reuse_if_open=True)
+        db.connect()
         query = Post.select()
         resp.body = json.dumps(
             {"count": query.count(), "premailer version": premailer.__version__}
