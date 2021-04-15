@@ -274,6 +274,13 @@
           <code>margin-*</code> unless they're capitalized.
         </p>
       </div>
+      <div class="form-group" ng-show="advancedMode">
+        <label for="preserve_handlebar_syntax">Preserve Handlebar syntax</label>
+        <input type="checkbox" ng-model="conversion.preserve_handlebar_syntax" id="preserve_handlebar_syntax">
+        <p class="help-block">
+          Preserve things like <code>&lt;a href=&quot;\{\{ data | default: &quot;Test &amp; &lt;code&gt;&quot; \}\}&quot;&gt;&lt;/a&gt;</code>
+        </p>
+      </div>
       <p>
         <button class="btn btn-lg btn-success" type="button" role="button" ng-click="start()" ng-disabled="converting">
           <i class="fa fa-cog fa-spin" ng-if="converting"></i>

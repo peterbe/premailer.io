@@ -131,9 +131,12 @@ class TransformResource:
         options["cssutils_logging_handler"] = logging_handler
         options["cssutils_logging_level"] = logging.WARNING
 
+        print("OPTIONS:", options)
+
         try:
             p = premailer.Premailer(html, **options)
         except TypeError as exp:
+            raise
             raise falcon.HTTPBadRequest("Invalid options to premailer", str(exp))
         error = None
         warnings = None

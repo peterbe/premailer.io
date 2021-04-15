@@ -8,7 +8,7 @@ angular
   //   });
   // })
 
-  .filter("filesize", function() {
+  .filter("filesize", function () {
     return function humanFileSize(bytes, precision) {
       "use strict";
       var units = ["bytes", "Kb", "Mb", "Gb", "Tb", "Pb"];
@@ -31,21 +31,21 @@ angular
   // from http://uncorkedstudios.com/blog/multipartformdata-file-upload-with-angularjs
   .directive("fileModel", [
     "$parse",
-    function($parse) {
+    function ($parse) {
       return {
         restrict: "A",
-        link: function(scope, element, attrs) {
+        link: function (scope, element, attrs) {
           var model = $parse(attrs.fileModel);
           var modelSetter = model.assign;
 
-          element.bind("change", function() {
-            scope.$apply(function() {
+          element.bind("change", function () {
+            scope.$apply(function () {
               modelSetter(scope, element[0].files[0]);
             });
           });
-        }
+        },
       };
-    }
+    },
   ])
 
   // .directive("fileread", [function () {
@@ -67,7 +67,7 @@ angular
   //     }
   // }])
 
-  .controller("ConversionCtrl", function($scope, $http, $timeout, $css) {
+  .controller("ConversionCtrl", function ($scope, $http, $timeout, $css) {
     $css.add(
       "//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"
     );
@@ -92,17 +92,19 @@ angular
       cache_css_parsing: true,
       align_floating_images: true,
       remove_unset_properties: true,
-      allow_network: true
+      allow_network: true,
+      preserve_handlebar_syntax: false,
+      capitalize_float_margin: false,
     };
     $scope.conversion.html =
       "<html>\n<style>\np { color:red }\n</style>\n" +
       "<body>\n  <p>Text</p>\n</body>\n</html>";
 
-    $scope.toggleShowWarnings = function() {
+    $scope.toggleShowWarnings = function () {
       $scope.showWarnings = !$scope.showWarnings;
     };
 
-    $scope.countWarnings = function(warnings) {
+    $scope.countWarnings = function (warnings) {
       return (warnings.match(/\n/g) || []).length;
     };
 
@@ -121,7 +123,7 @@ angular
     function tidyConversionData(data) {
       data = cloneObject(data);
       var splits = ["external_styles", "disable_basic_attributes"];
-      splits.forEach(function(key) {
+      splits.forEach(function (key) {
         if (data[key]) {
           data[key] = data[key].split(/\s*\n+\s*/);
         }
@@ -129,7 +131,7 @@ angular
       return data;
     }
 
-    $scope.start = function(start) {
+    $scope.start = function (start) {
       start = start || false;
       $scope.converting = true;
       $scope.results = null;
@@ -143,7 +145,7 @@ angular
         var fileInput = document.querySelector('input[type="file"]');
         var file = fileInput.files[0];
         var reader = new FileReader();
-        reader.onload = function(data) {
+        reader.onload = function (data) {
           $scope.conversion.html = data.target.result;
           $scope.start(true);
         };
@@ -156,27 +158,27 @@ angular
         }
         $http
           .post("/api/transform", tidyConversionData($scope.conversion))
-          .success(function(response) {
+          .success(function (response) {
             if (response.errors) {
               $scope.conversionErrors = response.errors;
             } else {
               $scope.results = response;
-              $timeout(function() {
+              $timeout(function () {
                 document.getElementById("results").scrollIntoView();
               }, 100);
             }
           })
-          .error(function() {
+          .error(function () {
             $scope.serverError = arguments[0];
             console.error.apply(console, arguments);
           })
-          .finally(function() {
+          .finally(function () {
             $scope.converting = false;
           });
       }
     };
 
-    $scope.setActiveResult = function(value) {
+    $scope.setActiveResult = function (value) {
       $scope.activeResult = value;
       if (value === "preview") {
         var d = document.querySelector("iframe").contentWindow.document;
@@ -186,7 +188,7 @@ angular
       }
     };
 
-    $scope.removeConversionError = function(error) {
+    $scope.removeConversionError = function (error) {
       $scope.conversionErrors.splice($scope.conversionErrors.indexOf(error), 1);
     };
   });
